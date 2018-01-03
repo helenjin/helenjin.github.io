@@ -1,5 +1,10 @@
+#about a{
+	color: gray;
+
+}
 #about a:hover {
-	color: red;
+	
+	color: skyblue;
 }
 
 #me h1 {

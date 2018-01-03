@@ -4,6 +4,7 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+
 (function($) {
 
 	var settings = {
@@ -28,6 +29,7 @@
 	var $window = $(window);
 
 	$window.on('load', function() {
+		var init = 0;
 
 		skel
 			.breakpoints({
@@ -185,10 +187,10 @@
 				// Window.
 					$window
 						.resize(function() {
+							
 
 							if (!isLocked)
 								$body._resize();
-
 						});
 
 					$window
