@@ -3,11 +3,13 @@
 
 }
 #about a:hover {
-	
+
 	color: skyblue;
 }
 
-#me h1 {
+#me header {
+	/*
 	font-family: 'Source Sans Pro', sans-serif;
-	font-stretch: expanded
+	*/
+	font-stretch: ultra-expanded
 }
