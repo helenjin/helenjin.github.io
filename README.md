@@ -1,5 +1,5 @@
 # helenjin.github.io
-Currently reachable at: https://helenjin.me
+Currently reachable at: www.helenjin.me
 
 My personal website! ^_^
 
