@@ -1,5 +1,5 @@
 # helenjin.github.io
-Currently reachable under domain name: helenjin.me
+Currently reachable at domain name: helenjin.me
 
 My personal website! ^_^
 
