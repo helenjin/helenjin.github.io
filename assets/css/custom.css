@@ -14,3 +14,8 @@
 	font-stretch: ultra-expanded
 }
 
+#footer a {
+	text-decoration: none;
+	/* text-align: right;*/
+}
+
