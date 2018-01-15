@@ -1,18 +1,47 @@
-#about a{
-	color: gray;
-
-}
-#about a:hover {
-
-	color: skyblue;
-}
-
 #me header {
 	/*
 	font-family: 'Source Sans Pro', sans-serif;
 	*/
 	font-stretch: ultra-expanded
 }
+
+#about a, #courses a, #reading a{
+	color: gray;
+	text-decoration:none
+}
+
+#about a:hover, #courses a:hover {
+
+	color: deepskyblue;
+}
+
+
+#reading a:hover {
+	color: orange;
+}
+
+#reading td, th {
+	padding-left: 9px;
+	width: 50%;
+}
+
+#courses td, th {
+  padding-left: 9px;
+  padding-right: 5px;
+  width: 50%;
+}
+
+#courses ul, #reading ul { 
+    display: block;
+    list-style-type: circle;
+
+    margin-bottom: 1 em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 25px;
+}
+
+
 
 
 
