@@ -13,6 +13,15 @@
 	padding-top: 70px;
 }
 
+	/* Divider lines: the left one climbs toward the avatar, the right one descends.
+	   Sisyphus pushes his boulder up the left slope; Pegasus takes flight on the right. */
+	#me-avatar {
+		position: relative;
+		--hill-rise: 60px;
+		--line: #c8cccf;
+		--ink: #9aa0a4;
+	}
+
 	#me-avatar img {
 		width: 190px;
 		height: 190px;
@@ -21,16 +30,210 @@
 		flex-shrink: 0;
 	}
 
-	/* Divider lines on either side of the avatar */
 	#me-avatar::before,
 	#me-avatar::after {
 		content: '';
 		position: static;
 		flex: 1;
 		width: auto;
-		height: 1px;
+		height: var(--hill-rise);
 		margin: 0;
-		background: #c8cccf;
+	}
+
+		/* "to bottom right" puts the 50% line through the bottom-left and top-right corners */
+		#me-avatar::before {
+			background: linear-gradient(to bottom right,
+				transparent calc(50% - 1px), var(--line) calc(50% - 0.5px),
+				var(--line) calc(50% + 0.5px), transparent calc(50% + 1px));
+		}
+
+		#me-avatar::after {
+			background: linear-gradient(to top right,
+				transparent calc(50% - 1px), var(--line) calc(50% - 0.5px),
+				var(--line) calc(50% + 0.5px), transparent calc(50% + 1px));
+		}
+
+	/* Each hill covers exactly one sloped line, so moving a child by the same
+	   percentage horizontally and vertically keeps it on the line. */
+	.hill {
+		position: absolute;
+		top: calc(70px + 95px - var(--hill-rise) / 2); /* padding-top + half the avatar, centered on the slope */
+		width: calc(50% - 155px); /* half the row minus half the avatar and the gap */
+		height: var(--hill-rise);
+		container-type: size;
+		pointer-events: none;
+	}
+
+		.hill-up {
+			left: 0;
+		}
+
+		.hill-down {
+			right: 0;
+		}
+
+		.hill svg {
+			display: block;
+			overflow: visible;
+		}
+
+	/* Sisyphus */
+	.climber {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		animation: climb 20s linear infinite;
+	}
+
+		.climber .pusher {
+			transform-origin: 0 100%;
+			transform: rotate(calc(-1 * atan2(100cqh, 100cqw)));
+		}
+
+		.climber .figure {
+			stroke: var(--ink);
+			stroke-width: 2;
+			fill: none;
+		}
+
+			.climber .figure circle {
+				fill: var(--ink);
+				stroke: none;
+			}
+
+		.climber .leg {
+			transform-box: view-box;
+			transform-origin: 19px 26px;
+			animation: stride 0.9s ease-in-out infinite alternate;
+		}
+
+			.climber .leg-b {
+				animation-direction: alternate-reverse;
+			}
+
+		.climber .rock {
+			transform-box: fill-box;
+			transform-origin: center;
+			animation: roll 2.4s linear infinite;
+		}
+
+			.climber .rock circle {
+				fill: #dde0e2;
+				stroke: var(--ink);
+				stroke-width: 1.5;
+			}
+
+			.climber .rock path {
+				fill: none;
+				stroke: var(--ink);
+				stroke-width: 1.2;
+				stroke-linecap: round;
+			}
+
+	/* Pegasus */
+	.flyer {
+		position: absolute;
+		left: 0;
+		bottom: 100%;
+		opacity: 0;
+		animation: take-flight 20s linear infinite;
+	}
+
+		/* Lean with the downhill slope, then pitch up on takeoff */
+		.flyer .tilt {
+			transform-origin: 0 100%;
+			transform: rotate(atan2(100cqh, 100cqw));
+		}
+
+		.flyer .pegasus {
+			transform-origin: 35% 95%;
+			animation: pitch 20s linear infinite;
+		}
+
+		.flyer .horse {
+			fill: #b9bec2;
+		}
+
+		.flyer .wing-near {
+			fill: #a4aaae;
+		}
+
+		.flyer .wing-far {
+			fill: #d3d7da;
+		}
+
+		.flyer .horn {
+			fill: #9aa0a4;
+		}
+
+		.flyer .eye {
+			fill: #fff;
+		}
+
+		.flyer .wing {
+			transform-box: view-box;
+			transform-origin: 46px 20px;
+			animation: flap 0.7s ease-in-out infinite alternate;
+		}
+
+			.flyer .wing-far {
+				transform-origin: 43px 20px;
+				animation-delay: -0.1s;
+			}
+
+	/* One shared 20s loop: Sisyphus climbs (0-60%), then Pegasus takes flight (62-100%) */
+	@keyframes climb {
+		0%        { left: 0;   bottom: 0;   opacity: 0; }
+		4%        {                         opacity: 1; }
+		54%       {                         opacity: 1; }
+		60%, 100% { left: 74%; bottom: 74%; opacity: 0; }
+	}
+
+	/* The flyer's box spans the hill top-left to bottom-right; its bottom edge
+	   rides the slope while galloping, then lifts off up and to the right. */
+	@keyframes take-flight {
+		0%, 62% { left: 0;    bottom: 100%; opacity: 0; }
+		65%     { left: 4%;   bottom: 96%;  opacity: 1; }
+		79%     { left: 36%;  bottom: 64%;  opacity: 1; }
+		92%     { left: 70%;  bottom: 150%; opacity: 1; }
+		100%    { left: 100%; bottom: 230%; opacity: 0; }
+	}
+
+	@keyframes pitch {
+		0%, 79% { transform: rotate(0deg); }
+		87%     { transform: rotate(-30deg); }
+		100%    { transform: rotate(-36deg); }
+	}
+
+	@keyframes stride {
+		from { transform: rotate(-9deg); }
+		to   { transform: rotate(9deg); }
+	}
+
+	@keyframes roll {
+		to { transform: rotate(360deg); }
+	}
+
+	@keyframes flap {
+		from { transform: rotate(-8deg); }
+		to   { transform: rotate(22deg); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.climber,
+		.climber .leg,
+		.climber .rock,
+		.flyer,
+		.flyer .pegasus,
+		.flyer .wing {
+			animation: none;
+		}
+
+		.flyer {
+			opacity: 1;
+			left: 30%;
+			bottom: 70%;
+		}
 	}
 
 #me header {
@@ -39,12 +242,72 @@
 }
 
 	#me header > h1 {
-		font-size: 32px;
+		font-family: 'EB Garamond', Georgia, serif;
+		font-weight: 500;
+		font-size: 40px;
+		letter-spacing: normal;
 	}
 
-	#me header > p {
-		font-size: 18px;
+	#me .subtitle {
+		margin: 0.8em 0 0.8em;
+		font-size: 16px;
+		letter-spacing: 0.02em;
+		color: #888;
 	}
+
+		#me .subtitle a {
+			color: #888;
+		}
+
+		#me .subtitle a:hover {
+			color: #444;
+		}
+
+		#me .subtitle .sep {
+			margin: 0 0.5em;
+		}
+
+	#me .bio {
+		max-width: 760px;
+		margin: 0.75em auto 0;
+		padding: 0 24px;
+		text-align: left;
+		font-size: 17px;
+		line-height: 1.7;
+		color: #555;
+		letter-spacing: normal;
+	}
+
+		#me .bio p {
+			margin: 0 0 0.9em;
+			font-size: inherit;
+		}
+
+		#me .bio ol.questions {
+			list-style: none;
+			counter-reset: question;
+			margin: -0.4em 0 0.9em;
+			padding-left: 1.5em;
+		}
+
+			#me .bio ol.questions li {
+				counter-increment: question;
+				margin: 0.2em 0;
+			}
+
+			#me .bio ol.questions li::before {
+				content: '(' counter(question) ') ';
+			}
+
+		#me .bio p.interests {
+			margin: 0.2em 0 1.2em;
+			padding: 0.8em 1.1em;
+			background: #f6f7f8;
+			border: 1px solid #e3e6e8;
+			border-radius: 6px;
+			font-size: 16px;
+			line-height: 1.6;
+		}
 
 	#me header a {
 		color: grey;
@@ -87,6 +350,47 @@
 		#news .date {
 			flex: 0 0 5.5em;
 			color: grey;
+		}
+
+	#news .more-news summary {
+		display: inline-block;
+		cursor: pointer;
+		color: grey;
+		font-size: 14px;
+		margin: 0.2em 0 0.6em;
+		list-style: none;
+	}
+
+		#news .more-news summary::-webkit-details-marker {
+			display: none;
+		}
+
+		#news .more-news summary::before {
+			content: '\25B8';
+			display: inline-block;
+			margin-right: 0.4em;
+			transition: transform 0.15s;
+		}
+
+		#news .more-news[open] summary::before {
+			transform: rotate(90deg);
+		}
+
+		#news .more-news summary:hover {
+			color: #444;
+		}
+
+		#news .more-news .show-less,
+		#news .more-news[open] .show-more {
+			display: none;
+		}
+
+		#news .more-news[open] .show-less {
+			display: inline;
+		}
+
+		#news .more-news ul {
+			margin-top: 0.6em;
 		}
 
 	#publications li {
@@ -146,9 +450,17 @@
 		display: none;
 	}
 
+	.hill {
+		display: none;
+	}
+
 	#news,
 	#publications {
 		padding: 0 16px 1.5em;
+	}
+
+	#me .bio {
+		padding: 0;
 	}
 
 	#news li {
