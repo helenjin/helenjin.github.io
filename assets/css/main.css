@@ -1408,29 +1408,6 @@
 						margin-top: 10;
 					}
 
-					#me-avatar::before {
-					    content: '';
-					    display: block;
-					    position: absolute;
-					    top: 160px;
-					    width: 435px;
-					    height: 1px;
-					    z-index: 1;
-					    background: #c8cccf;
-					}
-
-					#me-avatar::after {
-					    content: '';
-					    display: block;
-					    position: absolute;
-					    top: 160px;
-					    width: 300px;
-					    margin-left: 735px;
-					    height: 1px;
-					    z-index: 1;
-					    background: #c8cccf;
-					}
-
 		/* Footer */
 
 			#footer {

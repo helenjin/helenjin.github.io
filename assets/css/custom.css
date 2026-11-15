@@ -1,46 +1,70 @@
+/* Loaded after main.css, so these rules take precedence. */
+
+#me {
+	height: auto;
+	padding-bottom: 2em;
+}
+
+#me-avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 60px;
+	padding-top: 70px;
+}
+
+	#me-avatar img {
+		width: 190px;
+		height: 190px;
+		border-radius: 50%;
+		object-fit: cover;
+		flex-shrink: 0;
+	}
+
+	/* Divider lines on either side of the avatar */
+	#me-avatar::before,
+	#me-avatar::after {
+		content: '';
+		position: static;
+		flex: 1;
+		width: auto;
+		height: 1px;
+		margin: 0;
+		background: #c8cccf;
+	}
+
 #me header {
-	/*
-	font-family: 'Source Sans Pro', sans-serif;
-	*/
-	font-stretch: ultra-expanded
+	font-stretch: ultra-expanded;
+	padding: 0 16px;
 }
 
-#about a, #courses a, #reading a{
-	color: gray;
-	text-decoration:none
+	#me header > h1 {
+		font-size: 32px;
+	}
+
+	#me header > p {
+		font-size: 18px;
+	}
+
+	#me header a {
+		color: grey;
+		text-decoration: none;
+	}
+
+#footer a {
+	text-decoration: none;
 }
 
-#about a:hover, #courses a:hover {
+@media screen and (max-width: 780px) {
 
-	color: deepskyblue;
+	#me-avatar {
+		padding-top: 40px;
+		margin-bottom: 0.75em;
+	}
+
+	#me-avatar::before,
+	#me-avatar::after {
+		display: none;
+	}
+
 }
-
-
-#reading a:hover {
-	color: orange;
-}
-
-#reading td, th {
-	padding-left: 9px;
-	padding-right: 5px;
-	width: 50%;
-}
-
-#courses td, th {
-  padding-left: 9px;
-  padding-right: 5px;
-  width: 50%;
-}
-
-#courses ul, #reading ul { 
-    display: block;
-    list-style-type: circle;
-
-    margin-bottom: 1 em;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 25px;
-}
-
-
-
