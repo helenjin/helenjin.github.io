@@ -554,6 +554,68 @@
 		color: #777;
 	}
 
+/* Asta */
+
+#asta header {
+	text-align: center;
+	margin-bottom: 1.5em;
+}
+
+	#asta h2 {
+		font-family: 'EB Garamond', Georgia, serif;
+		font-weight: 500;
+		font-size: 34px;
+		letter-spacing: normal;
+	}
+
+	#asta .intro {
+		font-size: 16px;
+		color: #666;
+	}
+
+		#asta .intro a {
+			color: grey;
+			text-decoration: underline;
+			text-decoration-color: #c8cccf;
+		}
+
+#asta .gallery {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 12px;
+}
+
+	#asta figure {
+		margin: 0;
+	}
+
+	#asta figure img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 1;
+		object-fit: cover;
+		border-radius: 6px;
+	}
+
+	#asta figcaption {
+		margin-top: 0.4em;
+		font-size: 14px;
+		color: #777;
+		text-align: center;
+	}
+
+/* Hide the placeholder once any photo is added */
+#asta .gallery:has(figure) + .empty {
+	display: none;
+}
+
+#asta .empty {
+	text-align: center;
+	color: #888;
+	font-size: 16px;
+	padding: 2em 0 1em;
+}
+
 #footer a {
 	text-decoration: none;
 }
