@@ -540,6 +540,15 @@
 			color: grey;
 		}
 
+	/* News: only highlights show until "Show more" is opened; then the full timeline */
+	#news:not(:has(.more-news[open])) li.more {
+		display: none;
+	}
+
+	#news .more-news summary {
+		margin-top: 0;
+	}
+
 #footer a {
 	text-decoration: none;
 }
