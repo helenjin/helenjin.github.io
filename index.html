@@ -71,7 +71,8 @@
 											</div>
 										</div>
 									</div>
-									<img src="images/avatar.jpg" alt="Helen Jin">
+									<img src="images/avatar.jpg" alt="Helen Jin" tabindex="0">
+									<span class="idea" aria-hidden="true">💡</span>
 								</div>
 								<header>
 									<h1>Helen Jin</h1>
@@ -85,10 +86,10 @@
 										<p>
 										Welcome! I am a Ph.D. candidate in <b><a href="https://www.cis.upenn.edu/">Computer and Information Science (CIS)</a></b> at the <b><a href="https://www.upenn.edu/">University of Pennsylvania</a></b>,
 										where I am extremely grateful to be co-advised by <b><a href="https://boonloo.cis.upenn.edu/">Prof. Boon Thau Loo</a></b> and <b><a href="https://www.gse.upenn.edu/faculty/seiji-isotani">Prof. Seiji Isotani</a></b>.
-										I am also affiliated with <b><a href="https://nlp.cis.upenn.edu/">Penn NLP</a></b>, <b><a href="https://asset.engineering.upenn.edu/people-2/">ASSET</a></b>, and <b><a href="https://brachiolab.github.io/">BrachioLab</a></b>.
-										Previously, I earned my B.A. from <b><a href="https://www.college.columbia.edu/core-curriculum">Columbia University</a></b>&nbsp;♔,
-										with a double major in <b><a href="http://bulletin.columbia.edu/columbia-college/departments-instruction/mathematics/#text">Mathematics</a></b> and <b><a href="http://bulletin.columbia.edu/columbia-college/departments-instruction/computer-science/">Computer Science</a></b>
-										and a concentration in <b><a href="http://bulletin.columbia.edu/columbia-college/departments-instruction/east-asian-languages-cultures/">East Asian Languages and Cultures (EALAC)</a></b>.
+										I am also affiliated with <b><a href="https://nlp.cis.upenn.edu/">Penn NLP</a></b>, <b><a href="https://asset.engineering.upenn.edu/people-2/">ASSET</a></b>, and <b><a class="brachio" href="https://brachiolab.github.io/">BrachioLab</a></b>.
+										Previously, I earned my B.A. from <b><a class="cu" href="https://www.college.columbia.edu/core-curriculum" data-side-note="lions">Columbia University</a></b>&nbsp;♔,
+										with a double major in <b><a class="cu" href="http://bulletin.columbia.edu/columbia-college/departments-instruction/mathematics/#text">Mathematics</a></b> and <b><a class="cu" href="http://bulletin.columbia.edu/columbia-college/departments-instruction/computer-science/">Computer Science</a></b>
+										and a concentration in <b><a class="cu" href="http://bulletin.columbia.edu/columbia-college/departments-instruction/east-asian-languages-cultures/">East Asian Languages and Cultures (EALAC)</a></b>.
 										</p>
 										<p>
 										My research lies at the intersection of <b>trustworthy AI, human and machine understanding, and education</b>, guided by two fundamental questions:
@@ -234,9 +235,9 @@
 									<ul>
 											<li><span class="term">2025</span> <span><b><a href="https://www.engineering.upenn.edu/stories/the-asset-center-advances-trustworthy-ai-with-support-from-aws/">AWS-AI ASSET Fellow</a></b>, Penn Engineering ASSET Center for Trustworthy AI</span></li>
 											<li><span class="term">2023&ndash;2024</span> <span><b><a href="https://perryworldhouse.upenn.edu/news-and-insight/meet-our-2023-24-perry-world-house-graduate-associates/">Perry World House Graduate Associate</a></b>, University of Pennsylvania</span></li>
-											<li><span class="term">2023</span> <span><b>Penn Wharton Innovation Fund Validation Award</b></span></li>
+											<li><span class="term">2023</span> <span><b><a href="https://venturelab.upenn.edu/innovation-fund">Penn Wharton Innovation Fund Validation Award</a></b></span></li>
 									</ul>
-									<p class="note">For more, see my full <a href="helenjin_CV.pdf">CV</a>.</p>
+									<p class="note cv-link">For more information, see my full <a href="helenjin_CV.pdf">CV</a>.</p>
 								</section>
 							</article>
 
@@ -259,6 +260,17 @@
 
 					</div>
 
+				<!-- Margin note for the light bulb -->
+					<aside class="idea-note" aria-hidden="true">
+						A nod to <a href="https://en.wikipedia.org/wiki/Benjamin_Franklin" tabindex="-1">Benjamin Franklin</a>,
+						Penn&rsquo;s founder and a pioneer of electricity. ⚡
+					</aside>
+
+				<!-- Left margin note on Columbia hover -->
+					<aside class="idea-note side-left" id="note-lions" aria-hidden="true">Go Lions! 🦁
+						<a href="https://bwog.com/2016/09/nobody-knows-what-columbia-blue-is/" tabindex="-1">(Columbia blue is Pantone 292)</a>
+					</aside>
+
 				<!-- Footer -->
 					<div id="footer">
 						<a href="#" class="gotop js-gotop"><i class="icon fa-long-arrow-up"></i></a>
@@ -279,6 +291,76 @@
 			<script src="assets/js/skel-viewport.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+				// Light bulb: show it once the cursor comes within range of the photo.
+				(function() {
+					var avatar = document.querySelector('#me-avatar img');
+					if (!avatar) return;
+					var wrap = avatar.parentNode, range = 140, ticking = false, x, y;
+					var note = document.querySelector('.idea-note'), wrapper = document.getElementById('wrapper');
+
+					// Place the note in the margin to the right of the panel, level with the bulb,
+					// and only when the window is wide enough to have that margin.
+					function showNote(on) {
+						if (!note) return;
+						if (on) {
+							var a = avatar.getBoundingClientRect(), w = wrapper.getBoundingClientRect();
+							if (w.right + note.offsetWidth + 40 > window.innerWidth) on = false;
+							else note.style.top = (a.top - w.top - 40) + 'px';
+						}
+						note.classList.toggle('show', on);
+					}
+
+					function update() {
+						ticking = false;
+						var r = avatar.getBoundingClientRect();
+						if (!r.width) return;
+						var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+						var d = Math.hypot(x - cx, y - cy) - r.width / 2;
+						// Stay on while the cursor is over the note itself, so its link can be clicked.
+						var near = d < range || (note && note.classList.contains('show') && note.matches(':hover'));
+						wrap.classList.toggle('near', near);
+						showNote(near);
+					}
+
+					document.addEventListener('mousemove', function(e) {
+						x = e.clientX; y = e.clientY;
+						if (!ticking) { ticking = true; requestAnimationFrame(update); }
+					});
+					document.addEventListener('mouseleave', function() {
+						wrap.classList.remove('near');
+						showNote(false);
+					});
+				})();
+			</script>
+
+			<script>
+				// Margin notes on the left, shown while hovering a link with data-side-note.
+				(function() {
+					var wrapper = document.getElementById('wrapper');
+					document.querySelectorAll('[data-side-note]').forEach(function(link) {
+						var note = document.getElementById('note-' + link.getAttribute('data-side-note'));
+						if (!note) return;
+						function show() {
+							var l = link.getBoundingClientRect(), w = wrapper.getBoundingClientRect();
+							if (w.left - note.offsetWidth - 40 < 0) return;   // no room in the margin
+							note.style.top = (l.top - w.top + l.height / 2 - note.offsetHeight / 2) + 'px';
+							note.classList.add('show');
+						}
+						// Linger briefly after leaving the link, and stay open while hovering the note.
+						var timer;
+						function hide() { note.classList.remove('show'); }
+						function hideSoon() { clearTimeout(timer); timer = setTimeout(hide, 900); }
+						function keep() { clearTimeout(timer); }
+						link.addEventListener('mouseenter', function() { keep(); show(); });
+						link.addEventListener('focus', show);
+						link.addEventListener('mouseleave', hideSoon);
+						link.addEventListener('blur', hide);
+						note.addEventListener('mouseenter', keep);
+						note.addEventListener('mouseleave', hideSoon);
+					});
+				})();
+			</script>
 
 	</body>
 </html>
