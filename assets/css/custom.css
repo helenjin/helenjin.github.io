@@ -549,6 +549,11 @@
 		margin-top: 0;
 	}
 
+	#publications .aside {
+		display: block;
+		color: #777;
+	}
+
 #footer a {
 	text-decoration: none;
 }
