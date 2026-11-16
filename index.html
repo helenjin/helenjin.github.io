@@ -73,6 +73,7 @@
 									</div>
 									<img src="images/avatar.jpg" alt="Helen Jin" tabindex="0">
 									<span class="idea" aria-hidden="true">💡</span>
+									<span class="idea idea-auto" aria-hidden="true">💡</span>
 								</div>
 								<header>
 									<h1>Helen Jin</h1>
@@ -271,6 +272,21 @@
 						<a href="https://bwog.com/2016/09/nobody-knows-what-columbia-blue-is/" tabindex="-1">(Columbia blue is Pantone 292)</a>
 					</aside>
 
+				<!-- Margin note when clicking Sisyphus -->
+					<aside class="idea-note side-left wide" id="note-sisyphus" aria-hidden="true">
+						In Greek myth, <a href="https://en.wikipedia.org/wiki/Sisyphus" tabindex="-1">Sisyphus</a> is condemned to push a boulder uphill
+						for eternity, only to watch it roll back down each time.
+						As Camus wrote in <a href="https://en.wikipedia.org/wiki/The_Myth_of_Sisyphus" tabindex="-1"><span class="title">The Myth of Sisyphus</span></a>,
+						<span class="quote">&ldquo;The struggle itself toward the heights is enough to fill a man&rsquo;s heart. One must imagine Sisyphus happy.&rdquo; 🪨</span>
+					</aside>
+
+				<!-- Margin note when clicking the winged unicorn -->
+					<aside class="idea-note wide" id="note-pegasus" aria-hidden="true">
+						Part <a href="https://en.wikipedia.org/wiki/Pegasus" tabindex="-1">Pegasus</a>, the winged horse of Greek myth,
+						and part <a href="https://en.wikipedia.org/wiki/Unicorn" tabindex="-1">unicorn</a>.
+						<span class="quote">Struggle and endurance lead to eventual success &mdash; in the end, we always take flight! ✨</span>
+					</aside>
+
 				<!-- Footer -->
 					<div id="footer">
 						<a href="#" class="gotop js-gotop"><i class="icon fa-long-arrow-up"></i></a>
@@ -309,6 +325,7 @@
 							else note.style.top = (a.top - w.top - 40) + 'px';
 						}
 						note.classList.toggle('show', on);
+						if (window.unstackNotes) window.unstackNotes();
 					}
 
 					function update() {
@@ -362,5 +379,68 @@
 				})();
 			</script>
 
+			<script>
+				// Hover over (or near) a hillside figure to read about it in the margin:
+				// Sisyphus on the left, the winged unicorn on the right.
+				(function() {
+					var wrapper = document.getElementById('wrapper');
+					var figures = [
+						{ el: document.querySelector('.climber'), note: document.getElementById('note-sisyphus'), side: 'left' },
+						{ el: document.querySelector('.flyer'),   note: document.getElementById('note-pegasus'),  side: 'right' }
+					].filter(function(f) { return f.el && f.note; });
+
+					function near(f, x, y) {
+						var r = f.el.getBoundingClientRect(), pad = 30;
+						return parseFloat(getComputedStyle(f.el).opacity) > 0.2 &&
+							x > r.left - pad && x < r.right + pad && y > r.top - pad && y < r.bottom + pad;
+					}
+
+					function show(f) {
+						var r = f.el.getBoundingClientRect(), w = wrapper.getBoundingClientRect();
+						var room = f.side === 'left' ? w.left : window.innerWidth - w.right;
+						// In the side margin when there's room; otherwise just below the figure, inside the panel.
+						var inside = room < f.note.offsetWidth + 32;
+						f.note.classList.toggle('inside', inside);
+						f.note.style.top = inside
+							? (r.bottom - w.top + 14) + 'px'
+							: (r.top - w.top + r.height / 2 - f.note.offsetHeight / 2) + 'px';
+						f.note.classList.add('show');
+						f.note.dataset.top = parseFloat(f.note.style.top);
+						if (window.unstackNotes) window.unstackNotes();
+					}
+
+					function hide(f) { f.note.classList.remove('show'); }
+
+					// Both notes live in the right margin; if the Franklin note is up, sit below it.
+					window.unstackNotes = function() {
+						var peg = document.getElementById('note-pegasus'), ben = document.querySelector('.idea-note:not(.wide):not(.side-left)');
+						if (!peg || !ben || !peg.classList.contains('show') || peg.classList.contains('inside')) return;
+						var want = parseFloat(peg.dataset.top || peg.style.top);
+						if (ben.classList.contains('show')) {
+							var benBottom = parseFloat(ben.style.top) + ben.offsetHeight + 12;
+							var overlaps = want < benBottom && want + peg.offsetHeight > parseFloat(ben.style.top) - 12;
+							peg.style.top = (overlaps ? benBottom : want) + 'px';
+						} else {
+							peg.style.top = want + 'px';
+						}
+					};
+
+					// Show while the cursor is near a figure; linger a moment after it leaves,
+					// and stay open while the cursor is on the note so its links can be clicked.
+					document.addEventListener('mousemove', function(e) {
+						figures.forEach(function(f) {
+							var onNote = f.note.contains(e.target), isNear = near(f, e.clientX, e.clientY);
+							if (onNote || isNear) {
+								clearTimeout(f.timer);
+								f.leaving = false;
+								if (isNear && !f.note.classList.contains('show')) show(f);
+							} else if (f.note.classList.contains('show') && !f.leaving) {
+								f.leaving = true;
+								f.timer = setTimeout(function() { hide(f); f.leaving = false; }, 900);
+							}
+						});
+					});
+				})();
+			</script>
 	</body>
 </html>

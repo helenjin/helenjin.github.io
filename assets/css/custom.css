@@ -104,6 +104,26 @@
 			outline: none;
 		}
 
+	/* The same bulb lights up on its own as Sisyphus nears the top of the hill,
+	   then fades just before Pegasus appears (shares the 24s hillside loop). */
+	#me-avatar .idea-auto {
+		animation: idea-auto 24s linear infinite;
+		filter: drop-shadow(0 0 10px rgba(255, 214, 90, 0.9));
+	}
+
+	#me-avatar.near .idea-auto,
+	#me-avatar:has(img:hover) .idea-auto,
+	#me-avatar:has(img:focus) .idea-auto {
+		visibility: hidden;
+	}
+
+	@keyframes idea-auto {
+		0%, 43%   { opacity: 0; transform: translate(-50%, 0) scale(0.4); }
+		45.5%     { opacity: 1; transform: translate(-50%, -150%) scale(1); }
+		62%       { opacity: 1; transform: translate(-50%, -150%) scale(1); }
+		64.5%, 100% { opacity: 0; transform: translate(-50%, -150%) scale(0.85); }
+	}
+
 	@keyframes idea-glow {
 		from { filter: drop-shadow(0 0 2px rgba(255, 214, 90, 0.5)); }
 		to   { filter: drop-shadow(0 0 12px rgba(255, 214, 90, 0.95)); }
@@ -114,7 +134,7 @@
 		position: absolute;
 		left: 0;
 		bottom: 0;
-		animation: climb 20s linear infinite;
+		animation: climb 24s linear infinite;
 	}
 
 		.climber .pusher {
@@ -168,7 +188,7 @@
 		left: 0;
 		bottom: 100%;
 		opacity: 0;
-		animation: take-flight 20s linear infinite;
+		animation: take-flight 24s linear infinite;
 	}
 
 		/* Lean with the downhill slope, then pitch up on takeoff */
@@ -179,7 +199,7 @@
 
 		.flyer .pegasus {
 			transform-origin: 35% 95%;
-			animation: pitch 20s linear infinite;
+			animation: pitch 24s linear infinite;
 		}
 
 		.flyer .horse {
@@ -213,28 +233,28 @@
 				animation-delay: -0.1s;
 			}
 
-	/* One shared 20s loop: Sisyphus climbs (0-60%), then Pegasus takes flight (62-100%) */
+	/* One shared 24s loop: Sisyphus climbs (0-50%), the bulb lingers, then Pegasus takes flight (65-100%) */
 	@keyframes climb {
 		0%        { left: 0;   bottom: 0;   opacity: 0; }
-		4%        {                         opacity: 1; }
-		54%       {                         opacity: 1; }
-		60%, 100% { left: 74%; bottom: 74%; opacity: 0; }
+		3.3%      {                         opacity: 1; }
+		45%       {                         opacity: 1; }
+		50%, 100% { left: 74%; bottom: 74%; opacity: 0; }
 	}
 
 	/* The flyer's box spans the hill top-left to bottom-right; its bottom edge
 	   rides the slope while galloping, then lifts off up and to the right. */
 	@keyframes take-flight {
-		0%, 62% { left: 0;    bottom: 100%; opacity: 0; }
-		65%     { left: 4%;   bottom: 96%;  opacity: 1; }
-		79%     { left: 36%;  bottom: 64%;  opacity: 1; }
-		92%     { left: 70%;  bottom: 150%; opacity: 1; }
+		0%, 65% { left: 0;    bottom: 100%; opacity: 0; }
+		67.5%   { left: 4%;   bottom: 96%;  opacity: 1; }
+		79.2%   { left: 36%;  bottom: 64%;  opacity: 1; }
+		90%     { left: 70%;  bottom: 150%; opacity: 1; }
 		100%    { left: 100%; bottom: 230%; opacity: 0; }
 	}
 
 	@keyframes pitch {
-		0%, 79% { transform: rotate(0deg); }
-		87%     { transform: rotate(-30deg); }
-		100%    { transform: rotate(-36deg); }
+		0%, 79.2% { transform: rotate(0deg); }
+		85.8%     { transform: rotate(-30deg); }
+		100%      { transform: rotate(-36deg); }
 	}
 
 	@keyframes stride {
@@ -252,6 +272,10 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		#me-avatar .idea-auto {
+			display: none;
+		}
+
 		.climber,
 		.climber .leg,
 		.climber .rock,
@@ -897,6 +921,82 @@
 			border-left-color: rgba(255, 255, 255, 0.92);
 		}
 
+	/* Longer left-margin notes wrap instead of staying on one line */
+	.idea-note.side-left.wide {
+		width: 210px;
+		white-space: normal;
+	}
+
+		/* Fallback when the side margin is too narrow: sit inside the panel, under the hill */
+		.idea-note.side-left.wide.inside {
+			right: auto;
+			left: 16px;
+			width: 260px;
+			box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+			transform: translateY(-6px);
+		}
+
+			.idea-note.side-left.wide.inside.show {
+				transform: translateY(0);
+			}
+
+			.idea-note.side-left.wide.inside::before {
+				right: auto;
+				left: 60px;
+				top: -7px;
+				margin-top: 0;
+				border: 7px solid transparent;
+				border-top: 0;
+				border-bottom-color: rgba(255, 255, 255, 0.92);
+			}
+
+		.idea-note.side-left.wide a {
+			display: inline;
+			margin: 0;
+			color: #555;
+			text-decoration-color: #c8cccf;
+		}
+
+		.idea-note .quote {
+			display: block;
+			margin-top: 0.4em;
+		}
+
+		.idea-note .title {
+			font-style: normal;
+		}
+
+	/* Right-side wrapping note (winged unicorn) */
+	.idea-note.wide:not(.side-left) {
+		width: 210px;
+	}
+
+		.idea-note.wide:not(.side-left) a {
+			color: #555;
+			text-decoration-color: #c8cccf;
+		}
+
+		.idea-note.wide:not(.side-left).inside {
+			left: auto;
+			right: 16px;
+			width: 260px;
+			box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+			transform: translateY(-6px);
+		}
+
+			.idea-note.wide:not(.side-left).inside.show {
+				transform: translateY(0);
+			}
+
+			.idea-note.wide:not(.side-left).inside::before {
+				left: auto;
+				right: 60px;
+				top: -7px;
+				border: 7px solid transparent;
+				border-top: 0;
+				border-bottom-color: rgba(255, 255, 255, 0.92);
+			}
+
 	.idea-note.show {
 		opacity: 1;
 		transform: translateX(0);
@@ -926,6 +1026,10 @@
 	}
 
 	.hill {
+		display: none;
+	}
+
+	#me-avatar .idea-auto {
 		display: none;
 	}
 
