@@ -299,6 +299,16 @@
 				content: '(' counter(question) ') ';
 			}
 
+		#me .bio p.belief {
+			position: relative;
+			padding-left: 1.8em;
+		}
+
+			#me .bio .belief-icon {
+				position: absolute;
+				left: 0;
+			}
+
 		#me .bio p.interests {
 			margin: 0.2em 0 1.2em;
 			padding: 0.8em 1.1em;
@@ -314,10 +324,13 @@
 		text-decoration: none;
 	}
 
-/* News + Publications */
+/* News, Publications, Teaching */
 
 #news,
-#publications {
+#publications,
+#teaching,
+#service,
+#awards {
 	max-width: 760px;
 	margin: 0 auto;
 	padding: 0 24px 1.5em;
@@ -327,7 +340,10 @@
 }
 
 	#news h2,
-	#publications h2 {
+	#publications h2,
+	#teaching h2,
+	#service h2,
+	#awards h2 {
 		font-size: 22px;
 		margin: 0 0 0.6em;
 		padding-top: 1em;
@@ -335,7 +351,10 @@
 	}
 
 	#news ul,
-	#publications ul {
+	#publications ul,
+	#teaching ul,
+	#service ul,
+	#awards ul {
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -352,7 +371,8 @@
 			color: grey;
 		}
 
-	#news .more-news summary {
+	#news .more-news summary,
+	#teaching .more-news summary {
 		display: inline-block;
 		cursor: pointer;
 		color: grey;
@@ -361,35 +381,43 @@
 		list-style: none;
 	}
 
-		#news .more-news summary::-webkit-details-marker {
+		#news .more-news summary::-webkit-details-marker,
+		#teaching .more-news summary::-webkit-details-marker {
 			display: none;
 		}
 
-		#news .more-news summary::before {
+		#news .more-news summary::before,
+		#teaching .more-news summary::before {
 			content: '\25B8';
 			display: inline-block;
 			margin-right: 0.4em;
 			transition: transform 0.15s;
 		}
 
-		#news .more-news[open] summary::before {
+		#news .more-news[open] summary::before,
+		#teaching .more-news[open] summary::before {
 			transform: rotate(90deg);
 		}
 
-		#news .more-news summary:hover {
+		#news .more-news summary:hover,
+		#teaching .more-news summary:hover {
 			color: #444;
 		}
 
 		#news .more-news .show-less,
-		#news .more-news[open] .show-more {
+		#teaching .more-news .show-less,
+		#news .more-news[open] .show-more,
+		#teaching .more-news[open] .show-more {
 			display: none;
 		}
 
-		#news .more-news[open] .show-less {
+		#news .more-news[open] .show-less,
+		#teaching .more-news[open] .show-less {
 			display: inline;
 		}
 
-		#news .more-news ul {
+		#news .more-news ul,
+		#teaching .more-news ul {
 			margin-top: 0.6em;
 		}
 
@@ -416,22 +444,100 @@
 		font-style: italic;
 	}
 
-	#publications .note {
+	#publications .note,
+	#teaching .note,
+	#service .note,
+	#awards .note {
 		font-size: 13px;
 		color: grey;
 		margin: -0.4em 0 1em;
 	}
 
 	#news a,
-	#publications a {
+	#publications a,
+	#teaching a,
+	#service a,
+	#awards a {
 		color: grey;
 		text-decoration: underline;
 		text-decoration-color: #c8cccf;
 	}
 
 		#news a:hover,
-		#publications a:hover {
+		#publications a:hover,
+		#teaching a:hover,
+		#service a:hover,
+		#awards a:hover {
 			color: #444;
+		}
+
+	#teaching h3,
+	#service h3,
+	#awards h3 {
+		font-size: 16px;
+		font-weight: 600;
+		color: #444;
+		margin: 1em 0 0.3em;
+	}
+
+		#teaching h3:first-of-type,
+		#service h3:first-of-type,
+		#awards h3:first-of-type {
+			margin-top: 0;
+		}
+
+	#teaching li,
+	#service li,
+	#awards li {
+		display: flex;
+		gap: 1em;
+		margin-bottom: 0.35em;
+	}
+
+		#teaching .term,
+		#service .term,
+		#awards .term {
+			flex: 0 0 9.5em;
+			color: grey;
+		}
+
+	#teaching .detail,
+	#service .detail,
+	#awards .detail {
+		display: block;
+		font-size: 14px;
+		color: #777;
+		margin-top: 0.15em;
+	}
+
+	#teaching .note,
+	#service .note,
+	#awards .note {
+		margin: 1em 0 0;
+	}
+
+	#teaching .summary {
+		margin: 0 0 0.5em;
+		color: #666;
+	}
+
+	#teaching .quote {
+		margin: 0 0 1.4em;
+		padding: 0.2em 0 0.2em 1.1em;
+		border-left: 3px solid #e3e6e8;
+		font-style: italic;
+		color: #666;
+	}
+
+		#teaching .quote p {
+			margin: 0 0 0.4em;
+		}
+
+		#teaching .quote cite {
+			display: block;
+			font-style: normal;
+			font-size: 14px;
+			color: grey;
 		}
 
 #footer a {
@@ -455,7 +561,10 @@
 	}
 
 	#news,
-	#publications {
+	#publications,
+	#teaching,
+	#service,
+	#awards {
 		padding: 0 16px 1.5em;
 	}
 
@@ -463,10 +572,21 @@
 		padding: 0;
 	}
 
-	#news li {
+	#news li,
+	#teaching li,
+	#service li,
+	#awards li {
 		flex-direction: column;
 		gap: 0;
 	}
+
+		#teaching .term,
+		#service .term,
+		#awards .term {
+			flex: none;
+			font-weight: 600;
+		}
+
 
 		#news .date {
 			flex: none;
