@@ -848,6 +848,77 @@
 		color: #69b3e7;
 	}
 
+/* Penn links turn Penn blue on hover */
+#me .bio a.penn {
+	transition: color 0.2s ease;
+}
+
+	#me .bio a.penn:hover,
+	#me .bio a.penn:focus {
+		color: #011f5b;
+	}
+
+/* ASSET turns dark green, Penn NLP purple on hover */
+#me .bio a.asset,
+#me .bio a.nlp {
+	transition: color 0.2s ease;
+}
+
+	#me .bio a.asset:hover,
+	#me .bio a.asset:focus {
+		color: #1e6b34;
+	}
+
+	#me .bio a.nlp:hover,
+	#me .bio a.nlp:focus {
+		color: #7b3fbf;
+	}
+
+/* University of Pennsylvania turns Penn red on hover */
+#me .bio a.penn-red {
+	transition: color 0.2s ease;
+}
+
+	#me .bio a.penn-red:hover,
+	#me .bio a.penn-red:focus {
+		color: #990000;
+	}
+
+/* "reach out" gets a soft pink highlight on hover */
+#me .bio a.reach-out {
+	padding: 0 0.15em;
+	border-radius: 3px;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+	#me .bio a.reach-out:hover,
+	#me .bio a.reach-out:focus {
+		background-color: #fbd3e0;
+		color: #b03a68;
+	}
+
+/* Advisors' names light up golden yellow on hover */
+#me .bio a.advisor {
+	transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+	#me .bio a.advisor:hover,
+	#me .bio a.advisor:focus {
+		color: #e0a800;
+		text-shadow: 0 0 6px rgba(255, 200, 40, 0.55);
+	}
+
+/* Living Laboratory turns a light green on hover */
+#me .bio a.livinglab {
+	transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+	#me .bio a.livinglab:hover,
+	#me .bio a.livinglab:focus {
+		color: #6fd36b;
+		text-shadow: 0 0 6px rgba(111, 211, 107, 0.45);
+	}
+
 /* BrachioLab glows neon green on hover */
 #me .bio a.brachio {
 	transition: color 0.2s ease, text-shadow 0.2s ease;
