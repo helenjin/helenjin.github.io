@@ -897,6 +897,16 @@
 		color: #b03a68;
 	}
 
+/* Penn GSE turns orange on hover */
+#me .bio a.gse {
+	transition: color 0.2s ease;
+}
+
+	#me .bio a.gse:hover,
+	#me .bio a.gse:focus {
+		color: #e8771e;
+	}
+
 /* Advisors' names light up golden yellow on hover */
 #me .bio a.advisor {
 	transition: color 0.2s ease, text-shadow 0.2s ease;
@@ -1067,6 +1077,17 @@
 				border-top: 0;
 				border-bottom-color: rgba(255, 255, 255, 0.92);
 			}
+
+	/* "reach out" note: plain white like the Franklin note */
+	.idea-note.side-left.reach-note {
+		width: 190px;
+		color: #555;
+		background: rgba(255, 255, 255, 0.92);
+	}
+
+		.idea-note.side-left.reach-note::before {
+			border-left-color: rgba(255, 255, 255, 0.92);
+		}
 
 	.idea-note.show {
 		opacity: 1;
