@@ -1101,6 +1101,12 @@
 		text-decoration-color: #c8cccf;
 	}
 
+	#teaching .statement {
+		margin: -0.6em 0 1.4em;
+		font-size: 15px;
+		color: #666;
+	}
+
 #footer a {
 	text-decoration: none;
 }
