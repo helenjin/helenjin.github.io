@@ -462,5 +462,29 @@
 					});
 				})();
 			</script>
+			<script>
+				// The template sizes #main to the active panel once (panels are absolutely positioned on
+				// desktop for the cross-fade). Keep it in sync when a panel's content grows or shrinks,
+				// e.g. when "Show more" is expanded or fonts/images finish loading.
+				(function() {
+					var main = document.getElementById('main');
+					var ro = window.ResizeObserver && new ResizeObserver(function(entries) {
+						entries.forEach(function(entry) {
+							var panel = entry.target;
+							if (getComputedStyle(panel).position !== 'absolute') return;   // mobile: normal flow
+							if (panel.offsetParent === null || getComputedStyle(panel).opacity === '0') return;   // hidden panel
+							main.style.height = panel.offsetHeight + 'px';
+						});
+					});
+					if (ro) document.querySelectorAll('#main > .panel').forEach(function(p) { ro.observe(p); });
+
+					// Also resync right away when any "Show more" is toggled.
+					document.addEventListener('toggle', function(e) {
+						var panel = e.target.closest && e.target.closest('.panel');
+						if (panel && getComputedStyle(panel).position === 'absolute')
+							main.style.height = panel.offsetHeight + 'px';
+					}, true);
+				})();
+			</script>
 	</body>
 </html>
